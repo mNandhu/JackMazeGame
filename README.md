@@ -4,8 +4,12 @@ This is a simple maze game written in Jack. The game generates a maze using an I
 The player can move around the maze using the arrow keys. The goal is to reach the finish cell.
 
 ## Features:
-- Three difficulty levels: Easy, Medium, and Hard.  
+- Custom Splash Screen  
 ![image](images/Splash.png)  
+- Three difficulty levels: Easy, Medium, and Hard.  
+![image](images/Easy.png)  
+![image](images/Medium.png)  
+![image](images/Hard.png)  
 - Random Generation.  
 ![image](images/Gameplay.png)
 ![image](images/Gameplay2.png)
