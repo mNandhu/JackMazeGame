@@ -1,0 +1,44 @@
+class Stack{
+    /*
+    This class is a simple implementation of a stack data structure.
+    Operations include
+    - push: add an item 
+    - pop: remove and return an item 
+    - getSize: return the number of items in the stack
+    
+    */
+    field Array items;
+    field int max,sp;
+    
+    constructor Stack new(int size){
+        let items = Array.new(size);
+        let max = size;
+
+        return this;
+    } 
+
+    method void push(Cell item){
+        if(sp = max){
+            do Output.printString("Stack is full");
+        } else{
+            let items[sp] = item;
+            let sp = sp + 1;
+        }
+
+        return;
+    }
+
+    method Cell pop(){
+        if(sp = 0){
+            do Output.printString("Stack is empty");
+            return null;
+        } else{
+            let sp = sp - 1;
+            return items[sp];
+        }
+    }
+
+    method int getSize(){
+        return sp;
+    }
+}

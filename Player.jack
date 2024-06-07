@@ -1,0 +1,93 @@
+class Player{
+    /*
+    * This class is used to create a player object which is used to represent the player in the maze
+    * Methods:
+    *   draw() : This method is used to draw the player on the screen
+    *   erase() : This method is used to erase the player from the screen
+    *   geti() : This method is used to get the row of the player
+    *   getj() : This method is used to get the column of the player
+    *   move() : This method is used to move the player in the maze
+    * Fields:
+    *   row : This field is used to store the row of the player
+    *   colm : This field is used to store the column of the player
+    *   x : This field is used to store the x-coordinate of the player
+    *   y : This field is used to store the y-coordinate of the player
+    *   w : This field is used to store the width of the player
+
+    */
+    field int row,colm,x,y,w;
+    constructor Player new(int i,int j, int width){
+        let row = i;
+        let colm = j;
+        let w = width;
+        let x = (j * w) + (w/2); 
+        let y = (i * w) + (w/2);
+        return this;
+    }
+
+    method void draw(){
+        do Screen.drawCircle(x,y,w/4);
+        return;
+    }
+
+    method void erase(){
+        do Screen.setColor(false);
+        do draw();
+        do Screen.setColor(true);
+        return;
+    }
+
+    method int geti(){
+        return row;
+    }
+
+    method int getj(){
+        return colm;
+    }
+
+    method void move(int dir,Array Grid,int startRow,int startCol,int rows,int cols){
+        // Assume dir = 0,1,2,3 for left,up,right,down
+        var Cell c;
+        var Array tempArr;
+        if (dir = 0 & ~(colm-1 < startCol)){ // Left
+            let tempArr = Grid[row];
+            let c = tempArr[colm-1];
+            if (~(c.getWall(1))){
+                do erase();
+                let colm = colm - 1;
+                let x = x - w;
+            }
+        }
+        if (dir = 2 & (colm+1 < cols)){ // Right
+            let tempArr = Grid[row];
+            let c = tempArr[colm+1];
+            if (~(c.getWall(0))){
+                do erase();
+                let colm = colm + 1;
+                let x = x + w;
+            }
+        }
+
+        if (dir = 1 & ~(row-1 < startRow)){ // Up
+            let tempArr = Grid[row-1];
+            let c = tempArr[colm];
+            if (~(c.getWall(3))){
+                do erase();
+                let row = row - 1;
+                let y = y - w;
+            }
+        }
+
+        if (dir = 3 & (row+1 < rows)){ // Down
+            let tempArr = Grid[row+1];
+            let c = tempArr[colm];
+            if (~(c.getWall(2))){
+                do erase();
+                let row = row + 1;
+                let y = y + w;
+            }
+        }
+
+        return;
+    }
+}

@@ -1,0 +1,114 @@
+class Cell{
+    /*
+    * This class represents a cell in the maze
+    * Methods:
+    *   - geti() : returns the row number of the cell
+    *   - getj() : returns the column number of the cell
+    *   - show() : draws the walls of the cell
+    *   - highlight() : highlights the cell
+    *   - setVisited() : sets the cell as visited
+    *   - getVisited() : returns if the cell is visited
+    *   - getWall(int index) : returns the wall at the given index
+    *   - removeLeftWall() : removes the left wall of the cell
+    *   - removeRightWall() : removes the right wall of the cell
+    *   - removeTopWall() : removes the top wall of the cell
+    *   - removeBottomWall() : removes the bottom wall of the cell
+    * Fields:
+    *   - int i : row number of the cell
+    *   - int j : column number of the cell
+    *   - int w : width of the cell
+    *   - Array walls : array of walls of the cell
+    *   - boolean visited : if the cell is visited
+    */
+    
+    field int i,j,w;
+    field Array walls;
+    field boolean visited;
+
+    constructor Cell new(int row,int colm,int width){
+        let i = row;
+        let j = colm;
+        let w = width;
+        let walls = Array.new(4);
+        let walls[0] = true; // left
+        let walls[1] = true; // right
+        let walls[2] = true;  // top
+        let walls[3] = true;  // bottom
+
+        let visited = false;
+
+        return this;
+    }
+
+    method int geti(){
+        return i;
+    }
+
+    method int getj(){
+        return j;
+    }
+
+    method void show(){
+        var int x;
+        var int y; 
+        let x = j*w;
+        let y = i*w;
+        if(walls[0]){
+            do Screen.drawLine(x,y,x,y+w); // left
+        }
+        if(walls[1]){
+            do Screen.drawLine(x+w,y,x+w,y+w); // right
+        }
+        if(walls[2]){
+            do Screen.drawLine(x,y,x+w,y); // top
+        }
+        if(walls[3]){
+            do Screen.drawLine(x,y+w,x+w,y+w); // bottom
+        }
+
+        return; 
+    }
+
+    method void highlight(){
+        var int x;
+        var int y; 
+        let x = j*w;
+        let y = i*w;
+        do Screen.drawRectangle(x+5,y+5,x+w-5,y+w-5);
+        return;
+    
+    }
+
+    method void setVisited(){
+        let visited = true;
+        return;
+    }
+
+    method boolean getVisited(){
+        return visited;
+    }
+
+    method Array getWall(int index){
+        return walls[index];
+    }
+
+    method void removeLeftWall(){
+        let walls[0] = false;
+        return;
+    }
+
+    method void removeRightWall(){
+        let walls[1] = false;
+        return;
+    }
+
+    method void removeTopWall(){
+        let walls[2] = false;
+        return;
+    }
+
+    method void removeBottomWall(){
+        let walls[3] = false;
+        return;
+    }
+}

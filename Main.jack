@@ -1,0 +1,246 @@
+class Main{
+    function void main(){
+        /* ALGORITHM
+        * 1. Create a grid of cells
+        * 2. Choose a random cell and make it the current cell
+        * 3. While there are unvisited cells
+        *       1. If the current cell has any neighbors which have not been visited
+        *           1. Choose randomly one of the unvisited neighbors
+        *           2. Push the current cell to the stack
+        *           3. Remove the wall between the current cell and the chosen cell
+        *           4. Make the chosen cell the current cell and mark it as visited
+        *       2. Else if stack is not empty
+        *           1. Pop a cell from the stack
+        *           2. Make it the current cell
+        * 4. Choose a random cell as the finish cell
+        * 5. Draw the grid
+        * 6. Draw the player
+        * 7. Draw the finish cell
+        * 8. While game is not over
+        *       1. Get the key pressed
+        *       2. Move the player
+        *       3. Draw the player
+        *       4. If player is at finish cell
+        *           1. Game over
+        * 9. Print "You Win!"
+        */
+
+        var Cell next,finishCell;
+        var int i,j,w;
+        var int rows,cols;
+        var int startRow,startCol;
+        var Array Cells;
+        var Array tempArr;
+        var PseudoRand rng;
+        var Stack stack;
+        var Player player;
+        var int dir;
+        var boolean gameover,difficultySelected;
+        var int key,seed;
+        
+        do splashScreen.draw();     // Display Splash Screen
+
+        while (~difficultySelected){
+            let seed = seed + 1;
+            let key = Keyboard.keyPressed();
+            if (key = 49){
+                let w = 32;
+                let difficultySelected = true;
+            }
+            if (key = 50){
+                let w = 24;
+                let difficultySelected = true;
+            }
+            if (key = 51){
+                let w = 16;
+                let difficultySelected = true;
+            }
+        }
+
+
+        let rows = ((256/w) - 2);
+        let cols = ((512/w) - 2);
+        
+        let startRow = 1;
+        let startCol = 2;
+
+        let Cells = Array.new(rows);
+        let i = startRow;
+        while(i < rows){
+            let Cells[i] = Array.new(cols);
+            let tempArr = Cells[i];
+            let j = startCol;
+            while(j < cols){
+                let tempArr[j] = Cell.new(i,j,w);
+                let j = j + 1;
+            }
+            let i = i + 1;
+        }
+
+        let rng = PseudoRand.def(seed);
+        let stack = Stack.new(rows*cols);
+
+        let next = Main.createPassage(startRow,startCol,Cells,rows,cols,startRow,startCol,rng,stack);
+        do Sys.wait(10);
+        do Main.showGrid(startRow,startCol,Cells,rows,cols);
+        while (~(next=null)){
+            let next = Main.createPassage((next.geti()),(next.getj()),Cells,rows,cols,startRow,startCol,rng,stack);
+        }
+
+        let player = Player.new(startRow,startCol,w);
+
+        let tempArr = Cells[startRow + rng.next(rows-startRow-1)];
+        let finishCell = tempArr[startCol + rng.next(cols-startCol-1)];
+
+        do Main.showGrid(startRow,startCol,Cells,rows,cols); // Draw Grid
+        do player.draw(); // Draw Circle
+        do finishCell.highlight(); // Show Finish Cell
+        
+        let gameover = false;
+        while (~(gameover)){
+            let key = Keyboard.keyPressed();
+            while(key = 0 | (key < 130) | (key > 133) ){let key = Keyboard.keyPressed();}
+            do player.move(key-130,Cells,startRow,startCol,rows,cols); 
+            do player.draw();
+            if ((player.geti() = finishCell.geti()) & (player.getj() = finishCell.getj())){
+                let gameover = true;
+            }
+            do Sys.wait(150);
+        }
+        do Screen.clearScreen();
+        do Output.moveCursor(10,27);
+        do Output.printString("You Win!");
+        
+        do Cells.dispose();
+        do Sys.wait(2000);
+        do Main.main();
+
+        return;
+    }
+
+
+    function Cell createPassage(int x,int y,Array grid,int rows,int cols,int startRow,int startCol,PseudoRand rng,Stack stack){
+        var Cell curr,next;
+        var Cell left,right,top,bottom;
+        var Array neighbors;
+        var Cell temp;
+        var Array tempArr;
+        var int neighborcount;
+        var int nextRand;
+        var boolean flag;
+        
+
+        let tempArr = grid[x];
+        let curr = tempArr[y];
+
+        do curr.setVisited();
+        
+        let neighbors = Array.new(4);
+        let neighbors[0] = null;
+        let neighbors[1] = null;
+        let neighbors[2] = null;
+        let neighbors[3] = null;
+        
+        if (~(y-1 < startCol)){        
+            let tempArr = grid[x];
+            let left = tempArr[y-1]; // grid[x][y-1]
+            if (~(left.getVisited())){
+                let neighbors[0] = left;
+                let neighborcount = neighborcount + 1;
+            }
+        }
+
+        if (~(x-1 < startRow)){
+            let tempArr = grid[x-1];
+            let top = tempArr[y];
+            if (~(top.getVisited())){
+                let neighbors[1] = top;
+                let neighborcount = neighborcount + 1;
+
+            }
+        }
+
+        if (y+1 < cols){
+            let tempArr = grid[x];
+            let right = tempArr[y+1];
+            if (~(right.getVisited())){
+                let neighbors[2] = right;
+                let neighborcount = neighborcount + 1;
+            }
+        }
+
+        if (x+1 < rows){
+            let tempArr = grid[x+1];
+            let bottom = tempArr[y];
+            if (~(bottom.getVisited())){
+                let neighbors[3] = bottom;
+                let neighborcount = neighborcount + 1;
+            }
+        }
+
+        // neightbours = [null,null,null,null]
+        // neighbours = [null,right,null,bottom]
+        if (neighborcount > 0){
+            do stack.push(curr);
+            let flag = true;
+            while (flag){
+                let nextRand = rng.next(3);
+                let next = neighbors[nextRand];
+                if (next){
+                    let flag = false;
+                }
+            }
+        }
+        else{
+            if (stack.getSize() = 0){
+                return null;
+            }
+            let next = stack.pop();
+        }
+        do Main.removeWall(curr,next);
+        return next;
+    }
+
+    function void removeWall(Cell curr,Cell next){
+        var int x,y;
+        let x = (curr.geti() - next.geti());
+        let y = (curr.getj() - next.getj());
+        if (x = 1){
+            do curr.removeTopWall();
+            do next.removeBottomWall();
+        }
+        if (x = -1){
+            do curr.removeBottomWall();
+            do next.removeTopWall();
+        }
+        if (y = 1){
+            do curr.removeLeftWall();
+            do next.removeRightWall();
+        }
+        if (y = -1){
+            do curr.removeRightWall();
+            do next.removeLeftWall();
+        }
+
+        return;
+    }
+
+    function void showGrid(int startRow,int startCol,Array Cells,int rows,int cols){
+        var int i,j;
+        var Array tempArr;
+        var Cell c;
+        do Screen.clearScreen();
+        let i = startRow;
+        while(i<rows){
+            let tempArr = Cells[i];
+            let j = startCol;
+            while(j<cols){
+                let c = tempArr[j];
+                do c.show();
+                let j = j+1;
+            }
+            let i = i+1;
+        }
+        return;
+    }
+}
