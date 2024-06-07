@@ -90,12 +90,14 @@ class Main{
         let stack = Stack.new(rows*cols);   // Create a stack with the maximum possible sizes
 
         // Start Generating the Maze
+        do Output.moveCursor(10,27);
+        do Output.printString("Loading...");
+
         let next = Main.createPassage(startRow,startCol,Cells,rows,cols,startRow,startCol,rng,stack);
-        do Sys.wait(10);
-        do Main.showGrid(startRow,startCol,Cells,rows,cols);
         while (~(next=null)){
             let next = Main.createPassage((next.geti()),(next.getj()),Cells,rows,cols,startRow,startCol,rng,stack);
         }
+        do Main.showGrid(startRow,startCol,Cells,rows,cols);
 
         // Define the player object
         let player = Player.new(startRow,startCol,w);
@@ -130,7 +132,7 @@ class Main{
         // Wait for 2 seconds and restart the game
         do Cells.dispose();
         do Sys.wait(2000);
-        do Main.main();     // Note: May cause overflow
+        do Main.main();     // Note: May cause overflow, suggest rerunning the program
 
         return;
     }
