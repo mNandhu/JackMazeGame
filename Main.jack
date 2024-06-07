@@ -167,38 +167,40 @@ class Main{
             }
         }
 
-        if (~(x-1 < startRow)){
+        if (~(x-1 < startRow)){         // Check if top cell is within bounds
             let tempArr = grid[x-1];
-            let top = tempArr[y];
-            if (~(top.getVisited())){
-                let neighbors[1] = top;
+            let top = tempArr[y];       // top = grid[x-1][y]
+            if (~(top.getVisited())){   // Check if top cell is unvisited
+                let neighbors[1] = top; // Add top cell to neighbors
                 let neighborcount = neighborcount + 1;
 
             }
         }
 
-        if (y+1 < cols){
-            let tempArr = grid[x];
-            let right = tempArr[y+1];
-            if (~(right.getVisited())){
-                let neighbors[2] = right;
+        if (y+1 < cols){                // Check if right cell is within bounds
+            let tempArr = grid[x];      
+            let right = tempArr[y+1];     // right = grid[x][y+1]
+            if (~(right.getVisited())){   // Check if right cell is unvisited
+                let neighbors[2] = right; // Add right cell to neighbors
                 let neighborcount = neighborcount + 1;
             }
         }
 
-        if (x+1 < rows){
-            let tempArr = grid[x+1];
-            let bottom = tempArr[y];
-            if (~(bottom.getVisited())){
-                let neighbors[3] = bottom;
+        if (x+1 < rows){                // Check if bottom cell is within bounds
+            let tempArr = grid[x+1];    
+            let bottom = tempArr[y];        // bottom = grid[x+1][y]
+            if (~(bottom.getVisited())){    // Check if bottom cell is unvisited
+                let neighbors[3] = bottom;  // Add bottom cell to neighbors
                 let neighborcount = neighborcount + 1;
             }
         }
 
         // neightbours = [null,null,null,null]
-        // neighbours = [null,right,null,bottom]
+        // --> [null,right,null,bottom]
         if (neighborcount > 0){
-            do stack.push(curr);
+            do stack.push(curr);    // Push the current cell to the stack
+
+            // Pick a random unvisited neighbor
             let flag = true;
             while (flag){
                 let nextRand = rng.next(3);
@@ -211,7 +213,8 @@ class Main{
         else{
             // If there are no unvisited neighbors,
             if (stack.getSize() = 0){
-                return null;    // Exit if stack is empty
+                return null;    // Exit,
+                 if stack is empty
             }
             // Else, pop a cell from the stack
             let next = stack.pop();
