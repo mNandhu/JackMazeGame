@@ -63,7 +63,7 @@ class Main{
                 let difficultySelected = true;
             }
         }
-
+        do Screen.clearScreen(); // Clear the screen
         
         // Dimensions of the grid
         let rows = ((256/w) - 2);
