@@ -1,7 +1,7 @@
 class Main{
     function void main(){
         /* ALGORITHM
-        * 1. Create a grid of cells
+        * 1. Create a grid of cells (2D array of Cell objects)
         * 2. Choose a random cell and make it the current cell
         * 3. While there are unvisited cells
         *       1. If the current cell has any neighbors which have not been visited
@@ -64,7 +64,7 @@ class Main{
         let startRow = 1;
         let startCol = 2;
 
-        let Cells = Array.new(rows);
+        let Cells = Array.new(rows);    // Cells = new Cell[rows][cols]
         let i = startRow;
         while(i < rows){
             let Cells[i] = Array.new(cols);
@@ -141,11 +141,11 @@ class Main{
         let neighbors[2] = null;
         let neighbors[3] = null;
         
-        if (~(y-1 < startCol)){        
+        if (~(y-1 < startCol)){          // Check if left cell is within bounds
             let tempArr = grid[x];
-            let left = tempArr[y-1]; // grid[x][y-1]
-            if (~(left.getVisited())){
-                let neighbors[0] = left;
+            let left = tempArr[y-1];     // left = grid[x][y-1]
+            if (~(left.getVisited())){   // Check if left cell is unvisited
+                let neighbors[0] = left;    
                 let neighborcount = neighborcount + 1;
             }
         }
@@ -192,9 +192,11 @@ class Main{
             }
         }
         else{
+            // If there are no unvisited neighbors,
             if (stack.getSize() = 0){
-                return null;
+                return null;    // Exit if stack is empty
             }
+            // Else, pop a cell from the stack
             let next = stack.pop();
         }
         do Main.removeWall(curr,next);
@@ -202,6 +204,8 @@ class Main{
     }
 
     function void removeWall(Cell curr,Cell next){
+        // Remove the wall between the current cell and the next cell
+        // Based on the relative position of the two cells
         var int x,y;
         let x = (curr.geti() - next.geti());
         let y = (curr.getj() - next.getj());
@@ -226,10 +230,13 @@ class Main{
     }
 
     function void showGrid(int startRow,int startCol,Array Cells,int rows,int cols){
+        // Display the grid
         var int i,j;
         var Array tempArr;
         var Cell c;
         do Screen.clearScreen();
+
+        // Iterate through the grid and call the show() method of each cell
         let i = startRow;
         while(i<rows){
             let tempArr = Cells[i];

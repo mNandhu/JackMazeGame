@@ -25,12 +25,12 @@ class Player{
         return this;
     }
 
-    method void draw(){
+    method void draw(){     // Use Externally to draw the player
         do Screen.drawCircle(x,y,w/4);
         return;
     }
 
-    method void erase(){
+    method void erase(){    // Internal method to erase the player
         do Screen.setColor(false);
         do draw();
         do Screen.setColor(true);
