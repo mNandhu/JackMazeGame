@@ -132,7 +132,7 @@ class Main{
         // Wait for 2 seconds and restart the game
         do Cells.dispose();
         do Sys.wait(2000);
-        do Main.main();     // Note: May cause overflow, suggest rerunning the program
+        do Main.main();     // Note: May cause overflow after 5~6 runs, suggest rerunning the program
 
         return;
     }
