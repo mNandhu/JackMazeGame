@@ -10,7 +10,7 @@ References:
 The following is the documentation for the classes and methods in the game:
 ## splashScreen.jack
 
-This file contains the `splashScreen` class which is responsible for creating and managing the splash screen of the application. It has two methods:
+This file contains the `splashScreen` class which is responsible for creating and managing the splash screen of the game. It has two methods:
 
 1. `draw()`: This method is responsible for drawing the splash screen. It first clears the screen, then paints the splash screen, and finally prints the difficulty options for the user to choose from. The difficulty options are "Easy", "Medium", and "Hard". The method uses the `Screen.clearScreen()`, `Output.moveCursor()`, and `Output.printString()` methods to achieve this.
 
@@ -101,11 +101,11 @@ This file contains the `Player` class which is used to create a player object th
 
 ## Main.jack
 
-This file contains the `Main` class which is the entry point of the application. It contains the main game loop and the logic for creating the maze and moving the player. It has several methods and fields:
+This file contains the `Main` class which is the entry point of the program. It contains the main game loop and the logic for creating the maze and moving the player. It has several methods and fields:
 
 ### Methods:
 
-1. `main()`: This is the main method of the application. It initializes the game, creates the maze, and handles the game loop.
+1. `main()`: This is the main method of the program. It initializes the game, creates the maze, and handles the game loop.
 
 2. `createPassage(int x,int y,Array grid,int rows,int cols,int startRow,int startCol,PseudoRand rng,Stack stack)`: This method is responsible for creating a passage in the maze. It takes the current cell's coordinates, the grid, the number of rows and columns, the starting row and column, a random number generator, and a stack as parameters. It returns the next cell to visit.
 

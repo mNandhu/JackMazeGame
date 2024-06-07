@@ -2,15 +2,16 @@ class Player{
     /*
     * This class is used to create a player object which is used to represent the player in the maze
     * Methods:
+    *   new() : This method is used to create a new player object
     *   draw() : This method is used to draw the player on the screen
     *   erase() : This method is used to erase the player from the screen
     *   geti() : This method is used to get the row of the player
     *   getj() : This method is used to get the column of the player
     *   move() : This method is used to move the player in the maze
     * Fields:
-    *   row : This field is used to store the row of the player
+    *   row : This field is used to store the row of the player         (For checking collision with walls)
     *   colm : This field is used to store the column of the player
-    *   x : This field is used to store the x-coordinate of the player
+    *   x : This field is used to store the x-coordinate of the player  (For drawing the player on the screen)
     *   y : This field is used to store the y-coordinate of the player
     *   w : This field is used to store the width of the player
 
@@ -46,7 +47,8 @@ class Player{
     }
 
     method void move(int dir,Array Grid,int startRow,int startCol,int rows,int cols){
-        // Assume dir = 0,1,2,3 for left,up,right,down
+        // Update Player coords if a valid move is made
+        // let dir = 0,1,2,3 for left,up,right,down
         var Cell c;
         var Array tempArr;
         if (dir = 0 & ~(colm-1 < startCol)){ // Left
