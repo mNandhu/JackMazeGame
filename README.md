@@ -1,3 +1,13 @@
+# Maze Game
+
+This is a simple maze game written in Jack. The game generates a maze using an Iterative implementation (with stack).  
+The player can move around the maze using the arrow keys. The goal is to reach the finish cell.
+
+References:  
+    [Wikipedia](https://en.wikipedia.org/wiki/Maze_generation_algorithm)  
+    [Github/hbusul](https://github.com/hbusul/MazeEscaper)  
+
+The following is the documentation for the classes and methods in the game:
 ## splashScreen.jack
 
 This file contains the `splashScreen` class which is responsible for creating and managing the splash screen of the application. It has two methods:
