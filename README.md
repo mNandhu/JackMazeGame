@@ -36,7 +36,7 @@ The `Stack` class also has three fields:
 
 ## Cell.jack
 
-This file contains the `Cell` class which represents a cell in the maze. A cell is made up of 4 lines. It has several methods and fields:
+This file contains the `Cell` class which represents a cell in the maze. A cell is made up of 4 lines which can be disabled. It has several methods and fields:
 
 ### Methods:
 

@@ -32,7 +32,11 @@ class Player{
     }
 
     method void erase(){    // Internal method to erase the player
-        do Screen.setColor(false);
+        /* 
+        Erase the player by drawing a white circle at the same position
+        More efficient than redrawing the whole screen
+        */
+        do Screen.setColor(false);  
         do draw();
         do Screen.setColor(true);
         return;
