@@ -51,7 +51,7 @@ class Player{
         var Array tempArr;
         if (dir = 0 & ~(colm-1 < startCol)){ // Left
             let tempArr = Grid[row];
-            let c = tempArr[colm-1];
+            let c = tempArr[colm-1];    // c = Grid[row][colm-1]
             if (~(c.getWall(1))){
                 do erase();
                 let colm = colm - 1;

@@ -113,7 +113,7 @@ This file contains the `Main` class which is the entry point of the application.
 
 4. `showGrid(int startRow,int startCol,Array Cells,int rows,int cols)`: This method is responsible for drawing the grid on the screen. It takes the starting row and column, the grid, and the number of rows and columns as parameters.
 
-### Fields:
+### Fields/Vars:
 
 - `next`: This is a `Cell` object that represents the next cell to visit.
 - `finishCell`: This is a `Cell` object that represents the finish cell.

@@ -2,7 +2,7 @@ class Main{
     function void main(){
         /* ALGORITHM
         * 1. Create a grid of cells (2D array of Cell objects)
-        * 2. Choose a random cell and make it the current cell
+        * 2. Choose a starting cell and make it the current cell
         * 3. While there are unvisited cells
         *       1. If the current cell has any neighbors which have not been visited
         *           1. Choose randomly one of the unvisited neighbors
@@ -40,30 +40,33 @@ class Main{
         
         do splashScreen.draw();     // Display Splash Screen
 
+        // Wait for Player to select difficulty level
         while (~difficultySelected){
             let seed = seed + 1;
             let key = Keyboard.keyPressed();
-            if (key = 49){
+            if (key = 49){          // 1
                 let w = 32;
                 let difficultySelected = true;
             }
-            if (key = 50){
+            if (key = 50){          // 2
                 let w = 24;
                 let difficultySelected = true;
             }
-            if (key = 51){
+            if (key = 51){          // 3
                 let w = 16;
                 let difficultySelected = true;
             }
         }
 
-
+        
+        // Definitions of the grid
         let rows = ((256/w) - 2);
         let cols = ((512/w) - 2);
         
-        let startRow = 1;
-        let startCol = 2;
+        let startRow = 1;   // Starting row of the grid
+        let startCol = 2;   // Starting column of the grid
 
+        // Define the dimensions of the grid based on the difficulty level
         let Cells = Array.new(rows);    // Cells = new Cell[rows][cols]
         let i = startRow;
         while(i < rows){
@@ -77,9 +80,10 @@ class Main{
             let i = i + 1;
         }
 
-        let rng = PseudoRand.def(seed);
-        let stack = Stack.new(rows*cols);
+        let rng = PseudoRand.def(seed);     // Create a PseudoRand object with the seed
+        let stack = Stack.new(rows*cols);   // Create a stack with the maximum possible sizes
 
+        // Start Generating the Maze
         let next = Main.createPassage(startRow,startCol,Cells,rows,cols,startRow,startCol,rng,stack);
         do Sys.wait(10);
         do Main.showGrid(startRow,startCol,Cells,rows,cols);
@@ -87,22 +91,25 @@ class Main{
             let next = Main.createPassage((next.geti()),(next.getj()),Cells,rows,cols,startRow,startCol,rng,stack);
         }
 
+        // Define the player object
         let player = Player.new(startRow,startCol,w);
 
+        // Choose a random cell as the finish cell
         let tempArr = Cells[startRow + rng.next(rows-startRow-1)];
         let finishCell = tempArr[startCol + rng.next(cols-startCol-1)];
 
         do Main.showGrid(startRow,startCol,Cells,rows,cols); // Draw Grid
-        do player.draw(); // Draw Circle
+        do player.draw(); // Draw Player (Circle)
         do finishCell.highlight(); // Show Finish Cell
         
+        // Game Loop
         let gameover = false;
         while (~(gameover)){
             let key = Keyboard.keyPressed();
             while(key = 0 | (key < 130) | (key > 133) ){let key = Keyboard.keyPressed();}
             do player.move(key-130,Cells,startRow,startCol,rows,cols); 
             do player.draw();
-            if ((player.geti() = finishCell.geti()) & (player.getj() = finishCell.getj())){
+            if ((player.geti() = finishCell.geti()) & (player.getj() = finishCell.getj())){ // If player reaches the finish cell
                 let gameover = true;
             }
             do Sys.wait(150);
@@ -111,6 +118,7 @@ class Main{
         do Output.moveCursor(10,27);
         do Output.printString("You Win!");
         
+        // Wait for 2 seconds and restart the game
         do Cells.dispose();
         do Sys.wait(2000);
         do Main.main();
@@ -120,6 +128,15 @@ class Main{
 
 
     function Cell createPassage(int x,int y,Array grid,int rows,int cols,int startRow,int startCol,PseudoRand rng,Stack stack){
+        /*
+        * Parameters:
+        * x,y: Coordinates of the current cell
+        * grid: 2D array of Cell objects
+        * rows,cols: Number of rows and columns in the grid
+        * startRow,startCol: Starting row and column of the grid
+        * rng: PseudoRand object for generating random numbers
+        * stack: Stack object for backtracking
+        */
         var Cell curr,next;
         var Cell left,right,top,bottom;
         var Array neighbors;
@@ -145,7 +162,7 @@ class Main{
             let tempArr = grid[x];
             let left = tempArr[y-1];     // left = grid[x][y-1]
             if (~(left.getVisited())){   // Check if left cell is unvisited
-                let neighbors[0] = left;    
+                let neighbors[0] = left; // Add left cell to neighbors
                 let neighborcount = neighborcount + 1;
             }
         }
